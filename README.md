@@ -6,8 +6,6 @@ To create a production build, use `npm run build`.
 
 ## 总结
 
-------------
-
 #### JSX与DOM
 1. `JSX` 是 `JavaScript` 语言的一种语法扩展，长得像` HTML`，但并不是 `HTML`。
  因为`DOM` 元素包含的信息其实只有三个：标签名，属性，子元素，所以以下`JSX`
@@ -107,4 +105,44 @@ handleSubmitComment (comment) {
     console.log(comment)	//accept data
   }
 <CommentInput onSubmit={this.handleSubmitComment.bind(this)} />
+```
+#### 生命周期
+> **`React.js` 将组件渲染，并且构造` DOM` 元素然后塞入页面的过程称为组件的挂载**
+```
+-> constructor()
+-> componentWillMount()  //组件挂载开始之前，也就是在组件调用 render 方法之前调用。
+-> render()
+// 然后构造 DOM 元素插入页面
+-> componentDidMount()  //组件挂载完成以后，也就是 DOM 元素已经插入页面后调用。
+// ...
+// 即将从页面中删除
+-> componentWillUnmount()  //组件对应的 DOM 元素从页面中删除之前调用。
+// 从页面中删除
+```
+一般会把组件的 `state` 的初始化工作放在 `constructor` 里面去做；在 `componentWillMount `进行组件的启动工作，例如 `Ajax` 数据拉取、定时器的启动；组件从页面上销毁的时候，有时候需要一些数据的清理，例如定时器的清理，就会放在 `componentWillUnmount` 里面去做
+
+#### DOM操作
+可以给任意代表 `HTML` 元素标签加上 `ref`，这个属性值是一个函数
+**能不用 ref 就不用**
+```
+<input ref={(input) => this.input = input} />
+```
+#### HTML解析和内联style
+```
+<div className='editor-wrapper' dangerouslySetInnerHTML={{__html: this.state.content}} />
+```
+```
+<h1 style={{fontSize: '12px', color: 'red'}}>React.js </h1>
+```
+`style` 接受一个对象，这个对象里面是这个元素的 `CSS` 属性键值对，原来 `CSS` 属性中带 `- `的元素都必须要去掉 `-` 换成驼峰命名
+#### 组件默认参数和参数验证
+```
+//defaultProps
+  static defaultProps = {
+    comments: []
+  }
+//PropTypes  
+  static propTypes = {
+    comment: React.PropTypes.object  //现已被移除
+  }
 ```
