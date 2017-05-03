@@ -3,6 +3,7 @@ To start the App,use `npm start`
 
 To create a production build, use `npm run build`.
 ```
+:point_right: [点击预览](http://merihduedu.cn/project/React-Comment/ "点击预览")
 
 ## 总结
 
@@ -143,6 +144,32 @@ handleSubmitComment (comment) {
   }
 //PropTypes  
   static propTypes = {
-    comment: React.PropTypes.object  //现已被移除
+    comment: React.PropTypes.object  //新版已被移除
   }
+```
+#### 组件划分
+- `Dumb` 组件：只依赖`React.js` 和 `Dumb` 组件，不依赖` Redux `和 `React-redux`，可复用性好。一般存放在`src/components/`
+- `Smart` 组件：和各种数据打交道、和 `Ajax` 打交道，完成复杂的应用程序逻辑，然后把数据通过 `props` 传递给` Dumb`。一般存放在`src/containers/`
+- `reducers`：一般存放在`src/reducers/`
+	1. 定义 `action types`
+```
+	const INIT_COMMENTS = 'INIT_COMMENTS'
+```
+	2. 编写 `reducer`
+```
+	export default function (state, action) {
+    if (!state) {
+      state = { comments: [] }
+    }
+    switch (action.type) {
+    //
+    }
+  }
+```
+	3. 创建跟这个 `reducer`相关的 `action creator`--返回 `action` 的函数，这样我们 `dispatch` 的时候只需要传入数据就可以了
+```
+	export const initComments = (comments) => {
+  		return { 
+        type: INIT_COMMENTS, comments }
+    }
 ```

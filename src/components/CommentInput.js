@@ -2,36 +2,26 @@ import React, { Component } from 'react'
 
 class CommentInput extends Component {
 
- // static 开头的类属性，如 defaultProps、propTypes  
+ // static 开头的类属性，如 defaultProps、propTypes
   static propTypes = {
-    onSubmit: React.PropTypes.func
+    username: React.PropTypes.any,
+    onSubmit: React.PropTypes.func,
+    onUserNameInputBlur: React.PropTypes.func
+  }
+  static defaultProps={
+    username:''
   }
 // 构造函数，constructor
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state={
-      username: '',
+      username: props.username,
       content: ''
     }
   }
 // 组件生命周期
-  componentWillMount(){
-    this._loadUserName()
-  }
   componentDidMount(){
     this.textarea.focus()
-  }
-// _ 开头的私有方法
-  _loadUserName(){
-    const username=localStorage.getItem('username')
-    if(username){
-      this.setState({
-        username
-      })
-    }
-  }
-  _saveUserName(username){
-    localStorage.setItem('username',username)
   }
 // 事件监听方法，handle*
   handleUserNameChange(e){
@@ -40,7 +30,9 @@ class CommentInput extends Component {
     })
   }
   handleUserNameBlur(e){
-    this._saveUserName(e.target.value)
+    if (this.props.onUserNameInputBlur) {
+      this.props.onUserNameInputBlur(e.target.value)
+    }
   }
   handleContentChange(e){
     this.setState({
@@ -64,7 +56,7 @@ class CommentInput extends Component {
         <div className='comment-field'>
           <span className='comment-field-name'>用户名：</span>
           <div className='comment-field-input'>
-            <input value={this.state.username} onChange={this.handleUserNameChange.bind(this)} onBlur={this.handleUserNameBlur.bind(this)}/>
+            <input value={this.state.username} onChange={this.handleUserNameChange.bind(this)} onBlur={this.handleUserNameBlur.bind(this)} />
           </div>
         </div>
         <div className='comment-field'>
