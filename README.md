@@ -152,29 +152,26 @@ handleSubmitComment (comment) {
 - `Smart` 组件：和各种数据打交道、和 `Ajax` 打交道，完成复杂的应用程序逻辑，然后把数据通过 `props` 传递给` Dumb`。一般存放在`src/containers/`
 - `reducers`：一般存放在`src/reducers/`
 
-	1. 定义 `action types`
-
-```
-const INIT_COMMENTS = 'INIT_COMMENTS'
-```
-
+  1. 定义 `action types`
+  ```
+  const INIT_COMMENTS = 'INIT_COMMENTS'
+  ```
   2. 编写`reducer`
-
-```
-export default function (state, action){
-  if (!state) {
-    state = { comments: [] }
-  }
-  switch (action.type) {
-  //
-  }
-}
-```
-  3. 创建跟这个 `reducer`相关的 `action creator`--返回 `action` 的函数，这样我们 `dispatch` 的时候只需要传入数据就可以了
-```
-export const initComments = (comments) => {
-    return {
-      type: INIT_COMMENTS, comments
+  ```
+  export default function (state, action){
+    if (!state) {
+      state = { comments: [] }
+    }
+    switch (action.type) {
+    //
     }
   }
-```
+  ```
+  3. 创建跟这个 `reducer`相关的 `action creator`--返回 `action` 的函数，这样我们 `dispatch` 的时候只需要传入数据就可以了
+  ```
+  export const initComments = (comments) => {
+      return {
+        type: INIT_COMMENTS, comments
+      }
+    }
+  ```
