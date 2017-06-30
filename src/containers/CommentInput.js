@@ -43,9 +43,11 @@ class CommentInputContainer extends Component {
     if (!comment.content) {
       return
     }
+    //这里的this.props.comments是通过mapStateToProps传入的
     const  {comments}=this.props
     const newComments=[...comments,comment]
     localStorage.setItem('comments',JSON.stringify(newComments))
+    //这里的this.props.onSubmit是通过mapDispatchToProps传入的
     if (this.props.onSubmit) {
       this.props.onSubmit(comment)
     }
